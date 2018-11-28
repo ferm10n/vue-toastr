@@ -2,6 +2,45 @@
 // Vue.use(window.vueToastr, /* { defaultProgressBar: false } */)
 var app = new Vue({
   el: '#app',
+  render: function (createElement) {
+    var buttons = [
+      createElement('button', {
+        attrs: {
+          type: 'button',
+          name: 'button'
+        },
+        on: {
+          click: this.add
+        }
+      }, 'SHOW ME')
+    ]
+
+    if (this.showRemoveButton) {
+      buttons.push(createElement('button', {
+        attrs: {
+          type: 'button'
+        },
+        on: {
+          click: this.removeSticky
+        }
+      }, 'Remove Sticky Toast By Name'))
+    }
+
+    return createElement('div', {
+      attrs: {
+        id: 'app'
+      }
+    }, [
+      createElement('div', {
+        class: 'c'
+      }, [
+        createElement('p', buttons)
+      ]),
+      createElement(window.vueToastr, {
+        ref: 'toastr'
+      })
+    ])
+  },
   data: function data () {
     return {
       showRemoveButton: false
